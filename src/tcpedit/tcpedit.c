@@ -230,8 +230,7 @@ tcpedit_packet(tcpedit_t *tcpedit, struct pcap_pkthdr **pkthdr,
             rewrite_ipv4_tcp_sequence(tcpedit, &ip_hdr,
                     (*pkthdr)->caplen - l2len);
 
-        if ((retval = rewrite_rtp_seqno(tcpedit, &ip_hdr,
-                (*pkthdr)->caplen - l2len)) < 0)
+        if ((retval = rewrite_ipv4_rtp(tcpedit, &ip_hdr, (*pkthdr)->caplen - l2len)) < 0)
             return TCPEDIT_ERROR;
     }
 
@@ -275,6 +274,9 @@ tcpedit_packet(tcpedit_t *tcpedit, struct pcap_pkthdr **pkthdr,
 
         if (tcpedit->tcp_sequence_enable)
             rewrite_ipv6_tcp_sequence(tcpedit, &ip6_hdr, (*pkthdr)->caplen - l2len);
+
+        if ((retval = rewrite_ipv6_rtp(tcpedit, &ip6_hdr, (*pkthdr)->caplen - l2len)) < 0)
+            return TCPEDIT_ERROR;
     }
 
     if (tcpedit->fuzz_seed != 0) {
