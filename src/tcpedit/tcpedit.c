@@ -38,6 +38,7 @@
 #include "parse_args.h"
 #include "fuzzing.h"
 #include "rewrite_sequence.h"
+#include "rewrite_rtp.h"
 
 #include "lib/sll.h"
 #include "dlt.h"
@@ -228,6 +229,10 @@ tcpedit_packet(tcpedit_t *tcpedit, struct pcap_pkthdr **pkthdr,
         if (tcpedit->tcp_sequence_enable)
             rewrite_ipv4_tcp_sequence(tcpedit, &ip_hdr,
                     (*pkthdr)->caplen - l2len);
+
+        if ((retval = rewrite_rtp_seqno(tcpedit, &ip_hdr,
+                (*pkthdr)->caplen - l2len)) < 0)
+            return TCPEDIT_ERROR;
     }
 
     /* IPv6 edits */

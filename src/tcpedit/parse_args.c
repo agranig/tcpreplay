@@ -255,8 +255,30 @@ tcpedit_post_args(tcpedit_t *tcpedit) {
     } else if (rcode == 1) {
         warnx("%s", tcpedit_geterr(tcpedit));
     }
-     
 
+    if (HAVE_OPT(RTP_SEQ)) {
+        /* --rtp-seq */
+        tcpedit->rtp_seq_enable = true;
+        tcpedit->rtp_seq = OPT_VALUE_RTP_SEQ;
+    }
+
+    if (HAVE_OPT(RTP_TIMESTAMP)) {
+        /* --rtp-timestamp */
+        tcpedit->rtp_timestamp_enable = true;
+        tcpedit->rtp_timestamp = OPT_VALUE_RTP_TIMESTAMP;
+    }
+
+    if (HAVE_OPT(RTP_TIMESTAMP_INC)) {
+        /* --rtp-timestamp-inc */
+        tcpedit->rtp_timestamp_inc = OPT_VALUE_RTP_TIMESTAMP_INC;
+    }
+
+    if (HAVE_OPT(RTP_SSRC)) {
+        /* --rtp-ssrc */
+        tcpedit->rtp_ssrc_enable = true;
+        tcpedit->rtp_ssrc = OPT_VALUE_RTP_SSRC;
+    }
+     
     return 0;
 }
 

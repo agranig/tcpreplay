@@ -161,6 +161,17 @@ typedef struct {
 
     uint32_t fuzz_seed;
     uint32_t fuzz_factor;
+
+    bool rtp_seq_enable;
+    u_int16_t rtp_seq;
+
+    bool rtp_timestamp_enable;
+    u_int32_t rtp_timestamp;
+    u_int32_t rtp_timestamp_inc;
+
+    bool rtp_ssrc_enable;
+    u_int32_t rtp_ssrc;
+
 } tcpedit_t;
 
 

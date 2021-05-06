@@ -324,4 +324,56 @@ default you cannot expect that exactly every eighth packet will be modified.
 EOText;
 };
 
+flag = {
+    name        = rtp-seq;
+    descrip     = "Increment RTP seq number by 1 starting with given value";
+    arg-type    = number;
+    arg-range   = "0->65535";
+    doc         = <<- EOText
+Sets the RTP seq number of the first packet to the given value and increment
+it for each subsequent RTP packet. Useful if you set @var{--loop} to repeat
+sending RTP and you want to make sure the seq keeps increasing.
+EOText;
+};
+
+flag = {
+    name        = rtp-timestamp;
+    flags-must  = rtp-timestamp-inc;
+    descrip     = "Set RTP timestamp to given value";
+    arg-type    = number;
+    arg-range   = "0->";
+    doc         = <<- EOText
+Sets the RTP timestamp to the given value. If @var{--rtp_timestamp_inc} is
+given, the value is increased by that increment for each subsequent RTP
+packet.
+EOText;
+};
+
+flag = {
+    name        = rtp-timestamp-inc;
+    flags-must  = rtp-timestamp;
+    descrip     = "Increase RTP timestamp by given value";
+    arg-type    = number;
+    arg-range   = "0->";
+    doc         = <<- EOText
+Increase the RTP timestamp given in @var{--rtp_timestamp} by
+this value for each subsequent RTP packet. The value is usually
+the clockrate (in Hz) multiplied by the sampling size (in s), so
+an RTP stream with 8kHz clockrate and 20ms sampling size results
+in 8000*0.02=160, which is what you set for this option.
+EOText;
+};
+
+flag = {
+    name        = rtp-ssrc;
+    descrip     = "Set RTP SSRC to the given value";
+    arg-type    = number;
+    arg-range   = "0->";
+    doc         = <<- EOText
+Set the RTP SSRC to the given value, so you can replay multiple
+valid RTP streams in parallel.
+EOText;
+};
+
+
 #include plugins/dlt_stub.def
